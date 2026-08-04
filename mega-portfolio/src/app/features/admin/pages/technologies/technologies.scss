@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.tech-icon {
+  margin-right: 0.4rem;
+}
+
+.color-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}

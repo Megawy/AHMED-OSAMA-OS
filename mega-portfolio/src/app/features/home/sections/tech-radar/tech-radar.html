@@ -1,0 +1,48 @@
+<section class="tech-radar">
+
+  <div class="section-header">
+
+    <span class="section-badge">
+      TECHNOLOGY RADAR
+    </span>
+
+    <h2>
+      Technology Landscape
+    </h2>
+
+    <p>
+      Technologies I actively use, evaluate,
+      and explore while building systems.
+    </p>
+
+  </div>
+
+  <div class="radar-grid">
+
+    @for (group of radar; track group.title) {
+
+    <div class="radar-card">
+
+      <h3>
+        {{ group.title }}
+      </h3>
+
+      <div class="items">
+
+        @for (item of group.items; track item) {
+
+        <span>
+          {{ item }}
+        </span>
+
+        }
+
+      </div>
+
+    </div>
+
+    }
+
+  </div>
+
+</section>

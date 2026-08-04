@@ -1,0 +1,13 @@
+.project-grid {
+  width: min(1400px, 90%);
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+
+  gap: 2rem;
+
+  padding-bottom: 6rem;
+}

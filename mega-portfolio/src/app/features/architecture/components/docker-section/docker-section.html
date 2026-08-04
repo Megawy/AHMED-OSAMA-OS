@@ -1,0 +1,34 @@
+<section class="docker-section">
+    <div class="section-header reveal">
+        <span class="section-badge">DevOps & CI/CD</span>
+        <h2>{{ 'ARCH.DEPLOY_TITLE' | translate }}</h2>
+        <p>{{ 'ARCH.DEPLOY_DESC' | translate }}</p>
+    </div>
+
+    <div class="pipeline reveal">
+        @for (step of pipeline; track step.step) {
+        <div class="pipeline-step">
+            <div class="step-number">{{ step.step }}</div>
+            <span class="step-icon">{{ step.icon }}</span>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.description }}</p>
+        </div>
+        }
+    </div>
+
+    <div class="tech-stack-section reveal">
+        <h3>{{ 'ARCH.TECH_STACK_TITLE' | translate }}</h3>
+        <div class="stack-grid">
+            @for (group of techStack; track group.category) {
+            <div class="stack-card">
+                <h4>{{ group.category }}</h4>
+                <div class="stack-items">
+                    @for (item of group.items; track item) {
+                    <span class="stack-tag">{{ item }}</span>
+                    }
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>

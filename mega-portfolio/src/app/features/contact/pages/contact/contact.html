@@ -1,0 +1,133 @@
+<section class="contact-hero reveal">
+    <div class="hero-content">
+        <span class="badge">{{ 'CONTACT.TITLE' | translate }}</span>
+        <h1>{{ 'CONTACT.SUBTITLE' | translate }}</h1>
+    </div>
+</section>
+
+<section class="contact-body">
+    <div class="info-section reveal">
+        <h2 class="section-title">{{ 'CONTACT.INFO_TITLE' | translate }}</h2>
+        <div class="info-grid">
+            @for (item of contactInfo; track item.label) {
+            <a [href]="item.link ?? ''" class="info-card" [class.disabled]="!item.link"
+                [attr.target]="item.link?.startsWith('http') ? '_blank' : null"
+                [attr.rel]="item.link?.startsWith('http') ? 'noopener' : null">
+                <span class="info-icon">{{ item.icon }}</span>
+                <div class="info-text">
+                    <span class="info-label">{{ item.label }}</span>
+                    <span class="info-value">{{ item.value }}</span>
+                </div>
+            </a>
+            }
+        </div>
+
+        <div class="map-placeholder">
+            <div class="map-content">
+                <span class="map-icon">🗺️</span>
+                <span class="map-text">Cairo, Egypt</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section reveal">
+        <h2 class="section-title">{{ 'CONTACT.FORM_TITLE' | translate }}</h2>
+
+        @if (sent()) {
+        <div class="success-message">
+            <span class="success-icon">✅</span>
+            <h3>{{ 'CONTACT.SUCCESS' | translate }}</h3>
+            <button type="button" class="reset-btn" (click)="resetForm()">
+                {{ 'CONTACT.SEND_ANOTHER' | translate }}
+            </button>
+        </div>
+        } @else {
+        <form (ngSubmit)="onSubmit()" novalidate>
+            <div class="form-group">
+                <label for="name">{{ 'CONTACT.NAME' | translate }}</label>
+                <input type="text" id="name" name="name" [value]="form().name"
+                    (input)="updateField('name', $any($event.target).value)" (blur)="markTouched('name')"
+                    [class.invalid]="touched()['name'] && errors()['name']"
+                    [attr.aria-invalid]="touched()['name'] && !!errors()['name']"
+                    [attr.aria-describedby]="errors()['name'] ? 'name-error' : null" autocomplete="name" />
+                @if (touched()['name'] && errors()['name']) {
+                <span class="error-text" id="name-error">{{ errors()['name'] }}</span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="email">{{ 'CONTACT.EMAIL' | translate }}</label>
+                <input type="email" id="email" name="email" [value]="form().email"
+                    (input)="updateField('email', $any($event.target).value)" (blur)="markTouched('email')"
+                    [class.invalid]="touched()['email'] && errors()['email']"
+                    [attr.aria-invalid]="touched()['email'] && !!errors()['email']"
+                    [attr.aria-describedby]="errors()['email'] ? 'email-error' : null" autocomplete="email" />
+                @if (touched()['email'] && errors()['email']) {
+                <span class="error-text" id="email-error">{{ errors()['email'] }}</span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="subject">{{ 'CONTACT.SUBJECT' | translate }}</label>
+                <input type="text" id="subject" name="subject" [value]="form().subject"
+                    (input)="updateField('subject', $any($event.target).value)" (blur)="markTouched('subject')"
+                    [class.invalid]="touched()['subject'] && errors()['subject']"
+                    [attr.aria-invalid]="touched()['subject'] && !!errors()['subject']"
+                    [attr.aria-describedby]="errors()['subject'] ? 'subject-error' : null" />
+                @if (touched()['subject'] && errors()['subject']) {
+                <span class="error-text" id="subject-error">{{ errors()['subject'] }}</span>
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="message">{{ 'CONTACT.MESSAGE' | translate }}</label>
+                <textarea id="message" name="message" rows="5" [value]="form().message"
+                    (input)="updateField('message', $any($event.target).value)" (blur)="markTouched('message')"
+                    [class.invalid]="touched()['message'] && errors()['message']"
+                    [attr.aria-invalid]="touched()['message'] && !!errors()['message']"
+                    [attr.aria-describedby]="errors()['message'] ? 'message-error' : null"></textarea>
+                @if (touched()['message'] && errors()['message']) {
+                <span class="error-text" id="message-error">{{ errors()['message'] }}</span>
+                }
+            </div>
+
+            @if (serviceError()) {
+            <div class="service-error" role="alert">
+                <span>⚠️ {{ serviceError() }}</span>
+            </div>
+            }
+
+            <button type="submit" class="submit-btn" [disabled]="!canSubmit()" [attr.aria-busy]="sending()">
+                @if (sending()) {
+                <span class="loading-spinner"></span>
+                <span>{{ 'CONTACT.SENDING' | translate }}</span>
+                } @else {
+                <span>{{ 'CONTACT.SEND' | translate }}</span>
+                }
+            </button>
+        </form>
+        }
+    </div>
+</section>
+
+<section class="faq-section reveal">
+    <h2 class="section-title">{{ 'CONTACT.FAQ_TITLE' | translate }}</h2>
+    <div class="faq-list">
+        @for (faq of faqs; track faq.question) {
+        <div class="faq-item">
+            <h3 class="faq-question">{{ faq.question }}</h3>
+            <p class="faq-answer">{{ faq.answer }}</p>
+        </div>
+        }
+    </div>
+</section>
+
+<section class="cta-section reveal">
+    <div class="cta-content">
+        <h2>{{ 'CONTACT.CTA_TITLE' | translate }}</h2>
+        <p>{{ 'CONTACT.CTA_DESC' | translate }}</p>
+        <a href="mailto:ahmed.osama@example.com" class="cta-btn">
+            {{ 'CONTACT.CTA_BTN' | translate }}
+        </a>
+    </div>
+</section>

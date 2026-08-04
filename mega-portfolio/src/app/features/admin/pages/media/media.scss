@@ -1,0 +1,117 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.upload-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  input {
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    color: #f8fafc;
+    font-size: 0.85rem;
+    outline: none;
+    width: 160px;
+
+    &::placeholder {
+      color: #475569;
+    }
+
+    &:focus {
+      border-color: #00e5ff;
+    }
+  }
+}
+
+.upload-btn {
+  cursor: pointer;
+  margin: 0;
+}
+
+.file-input {
+  display: none;
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.media-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(11, 19, 41, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+  min-width: 0;
+
+  &:hover {
+    border-color: rgba(0, 229, 255, 0.3);
+  }
+}
+
+.media-preview {
+  aspect-ratio: 16 / 10;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .file-icon {
+    font-size: 2.5rem;
+  }
+}
+
+.media-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem;
+  min-width: 0;
+
+  .media-name {
+    color: #f8fafc;
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .media-meta {
+    color: #64748b;
+    font-size: 0.72rem;
+  }
+}
+
+.media-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  padding: 0 0.75rem 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .media-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .upload-controls input {
+    width: 120px;
+  }
+}

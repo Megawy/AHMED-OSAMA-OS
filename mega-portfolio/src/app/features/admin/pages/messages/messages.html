@@ -1,0 +1,111 @@
+<div class="admin-page">
+    <div class="page-header">
+        <h1>Messages <span class="count-badge">{{ unreadCount() }} unread</span></h1>
+    </div>
+
+    <div class="toolbar">
+        <input type="text" class="search" placeholder="Search messages..." [value]="searchQuery()"
+            (input)="onSearch($event)" />
+        <select class="filter" [value]="filterStatus()" (change)="onStatusChange($any($event.target).value)"
+            aria-label="Filter by status">
+            @for (s of statusOptions; track s) {
+            <option [value]="s">{{ statusLabelMap[s] }}</option>
+            }
+        </select>
+    </div>
+
+    @if (loading()) {
+    <div class="loading">Loading...</div>
+    } @else if (error()) {
+    <div class="alert error">{{ error() }}</div>
+    } @else if (filtered().length === 0) {
+    <div class="empty">No messages found.</div>
+    } @else {
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>From</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (msg of filtered(); track msg.id) {
+                <tr [class.unread-row]="msg.status === 'new'" (click)="viewMessage(msg)" role="button" tabindex="0">
+                    <td>
+                        <strong>{{ msg.name }}</strong>
+                        <br /><small>{{ msg.email }}</small>
+                    </td>
+                    <td>{{ msg.subject }}</td>
+                    <td><span class="badge" [ngClass]="getStatusBadgeClass(msg.status)">{{ statusLabels[msg.status]
+                            }}</span></td>
+                    <td>{{ msg.createdAt | date:'MMM d, yyyy' }}</td>
+                    <td class="actions" (click)="$event.stopPropagation()">
+                        @if (msg.status === 'new') {
+                        <button class="btn-icon" (click)="markAsRead(msg)" title="Mark as read">✅</button>
+                        }
+                        @if (msg.status !== 'archived') {
+                        <button class="btn-icon" (click)="archive(msg)" title="Archive">📦</button>
+                        }
+                        <button class="btn-icon" (click)="confirmDelete(msg.id!)" title="Delete">🗑️</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+</div>
+
+<div class="admin-page admin-dialog-host">
+    @if (selectedMessage(); as msg) {
+    <div class="modal-backdrop" (click)="closeMessage()" (document:keydown.escape)="closeMessage()">
+        <div class="modal" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h2>{{ msg.subject }}</h2>
+                <button class="close" (click)="closeMessage()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="message-meta">
+                    <div class="meta-row"><strong>From:</strong> {{ msg.name }} ({{ msg.email }})</div>
+                    <div class="meta-row"><strong>Date:</strong> {{ msg.createdAt | date:'full' }}</div>
+                    <div class="meta-row"><strong>Status:</strong>
+                        <span class="badge" [ngClass]="getStatusBadgeClass(msg.status)">{{ statusLabels[msg.status]
+                            }}</span>
+                    </div>
+                </div>
+                <div class="message-content">{{ msg.message }}</div>
+                <div class="message-actions">
+                    @if (msg.status === 'new') {
+                    <button class="btn-primary" (click)="markAsRead(msg)">Mark as Read</button>
+                    }
+                    @if (msg.status !== 'archived') {
+                    <button class="btn-secondary" (click)="archive(msg)">Archive</button>
+                    }
+                    <button class="btn-danger" (click)="confirmDelete(msg.id!)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    @if (showDeleteConfirm()) {
+    <div class="modal-backdrop" (click)="cancelDelete()" (document:keydown.escape)="cancelDelete()">
+        <div class="modal small" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Confirm Delete</h2>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this message? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" (click)="cancelDelete()">Cancel</button>
+                <button class="btn-danger" (click)="doDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+    }
+</div>

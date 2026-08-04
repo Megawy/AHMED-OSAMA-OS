@@ -1,0 +1,100 @@
+<div class="login-page">
+    <div class="login-card">
+        @if (!showForgotForm()) {
+        <div class="login-header">
+            <div class="logo-mark">&lt;/&gt;</div>
+            <h1>Admin Login</h1>
+            <p>Sign in to manage your portfolio</p>
+        </div>
+
+        @if (error()) {
+        <div class="alert error" role="alert">
+            <span>⚠</span>
+            <span>{{ error() }}</span>
+        </div>
+        }
+
+        <form (ngSubmit)="onSubmit()" class="login-form">
+            <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="admin@example.com"
+                    [ngModel]="email()" (ngModelChange)="email.set($event)" [disabled]="loading()" />
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input id="password" name="password" [type]="showPassword() ? 'text' : 'password'"
+                        autocomplete="current-password" placeholder="••••••••" [ngModel]="password()"
+                        (ngModelChange)="password.set($event)" [disabled]="loading()" />
+                    <button type="button" class="toggle-pwd" (click)="togglePassword()"
+                        [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+                        {{ showPassword() ? '🙈' : '👁' }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="checkbox">
+                    <input type="checkbox" [checked]="rememberMe()"
+                        (change)="rememberMe.set($any($event.target).checked)" />
+                    <span>Remember me</span>
+                </label>
+                <button type="button" class="forgot-link" (click)="toggleForgotForm()">
+                    Forgot password?
+                </button>
+            </div>
+
+            <button type="submit" class="submit-btn" [disabled]="!canSubmit()">
+                @if (loading()) {
+                <span class="spinner"></span>
+                <span>Signing in...</span>
+                } @else {
+                <span>Sign In</span>
+                }
+            </button>
+        </form>
+        } @else {
+        <div class="login-header">
+            <div class="logo-mark">&lt;/&gt;</div>
+            <h1>Reset Password</h1>
+            <p>Enter your email to receive reset instructions</p>
+        </div>
+
+        @if (forgotSent()) {
+        <div class="alert success" role="alert">
+            <span>✅</span>
+            <span>Reset email sent. Check your inbox.</span>
+        </div>
+        } @else {
+        <form (ngSubmit)="sendReset()" class="login-form">
+            <div class="field">
+                <label for="forgot-email">Email</label>
+                <input id="forgot-email" name="forgotEmail" type="email" placeholder="admin@example.com"
+                    [ngModel]="forgotEmail()" (ngModelChange)="forgotEmail.set($event)" [disabled]="loading()" />
+            </div>
+
+            @if (error()) {
+            <div class="alert error" role="alert">
+                <span>⚠</span>
+                <span>{{ error() }}</span>
+            </div>
+            }
+
+            <button type="submit" class="submit-btn" [disabled]="loading() || !forgotEmail().trim()">
+                @if (loading()) {
+                <span class="spinner"></span>
+                <span>Sending...</span>
+                } @else {
+                <span>Send Reset Email</span>
+                }
+            </button>
+        </form>
+        }
+
+        <button type="button" class="back-link" (click)="toggleForgotForm()">
+            ← Back to login
+        </button>
+        }
+    </div>
+</div>

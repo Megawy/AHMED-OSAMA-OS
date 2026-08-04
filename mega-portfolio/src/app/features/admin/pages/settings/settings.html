@@ -1,0 +1,94 @@
+<div class="admin-page">
+  <div class="page-header">
+    <h1>Site Settings</h1>
+    <button class="btn-primary" [disabled]="saving()" (click)="save()">
+      {{ saving() ? 'Saving...' : '💾 Save Settings' }}
+    </button>
+  </div>
+
+  @if (loading()) {
+  <div class="loading">Loading...</div>
+  } @else if (error()) {
+  <div class="alert error">{{ error() }}</div>
+  } @else {
+  @if (saved()) {
+  <div class="alert success">Settings saved successfully!</div>
+  }
+
+  <form class="settings-form" (ngSubmit)="save()">
+    <app-admin-card title="General" description="Basic site identity and summary.">
+      <div class="form-grid">
+        <div class="field">
+          <label for="set-name">Site Name</label>
+          <input id="set-name" [ngModel]="form().siteName" (ngModelChange)="updateField('siteName', $event)"
+            name="siteName" placeholder="Portfolio Name" />
+        </div>
+        <div class="field full">
+          <label for="set-desc">Site Description</label>
+          <textarea id="set-desc" [ngModel]="form().siteDescription"
+            (ngModelChange)="updateField('siteDescription', $event)" name="siteDescription" rows="3"
+            placeholder="Short site description"></textarea>
+        </div>
+      </div>
+    </app-admin-card>
+
+    <app-admin-card title="Contact Information" description="How visitors can reach you.">
+      <div class="form-grid">
+        <div class="field">
+          <label for="set-email">Email</label>
+          <input id="set-email" type="email" [ngModel]="form().email" (ngModelChange)="updateField('email', $event)"
+            name="email" placeholder="email@example.com" />
+        </div>
+        <div class="field">
+          <label for="set-phone">Phone</label>
+          <input id="set-phone" [ngModel]="form().phone" (ngModelChange)="updateField('phone', $event)" name="phone"
+            placeholder="+20 xxx xxx xxxx" />
+        </div>
+        <div class="field">
+          <label for="set-location">Location</label>
+          <input id="set-location" [ngModel]="form().location" (ngModelChange)="updateField('location', $event)"
+            name="location" placeholder="City, Country" />
+        </div>
+        <div class="field">
+          <label for="set-resume">Resume URL</label>
+          <input id="set-resume" [ngModel]="form().resumeUrl" (ngModelChange)="updateField('resumeUrl', $event)"
+            name="resumeUrl" placeholder="https://..." />
+        </div>
+      </div>
+    </app-admin-card>
+
+    <app-admin-card title="Social Links" description="Profiles displayed across the site.">
+      <div class="form-grid">
+        <div class="field">
+          <label for="set-github">GitHub</label>
+          <input id="set-github" [ngModel]="form().github" (ngModelChange)="updateField('github', $event)" name="github"
+            placeholder="https://github.com/username" />
+        </div>
+        <div class="field">
+          <label for="set-linkedin">LinkedIn</label>
+          <input id="set-linkedin" [ngModel]="form().linkedin" (ngModelChange)="updateField('linkedin', $event)"
+            name="linkedin" placeholder="https://linkedin.com/in/username" />
+        </div>
+      </div>
+
+      <div class="social-links-list">
+        <h3>Additional Links</h3>
+        @for (link of socialLinks; track $index) {
+        <div class="social-row">
+          <div class="social-inputs">
+            <input [ngModel]="link.platform" (ngModelChange)="updateSocialLink($index, 'platform', $event)"
+              [name]="'platform-' + $index" placeholder="Platform" />
+            <input [ngModel]="link.url" (ngModelChange)="updateSocialLink($index, 'url', $event)"
+              [name]="'url-' + $index" placeholder="URL" />
+            <input [ngModel]="link.icon" (ngModelChange)="updateSocialLink($index, 'icon', $event)"
+              [name]="'icon-' + $index" placeholder="Icon" />
+          </div>
+          <button class="btn-icon" (click)="removeSocialLink($index)" title="Remove">🗑️</button>
+        </div>
+        }
+        <button class="btn-secondary" (click)="addSocialLink()">+ Add Social Link</button>
+      </div>
+    </app-admin-card>
+  </form>
+  }
+</div>

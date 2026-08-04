@@ -1,0 +1,176 @@
+<section class="lab">
+
+  <div class="section-header">
+
+    <span class="section-badge">
+      SYSTEM DESIGN LAB
+    </span>
+
+    <h2>
+      Backend Engineering Playground
+    </h2>
+
+    <p>
+      Visual representation of patterns and
+      architectures I use in production systems.
+    </p>
+
+  </div>
+
+  <div class="tabs">
+
+    <button [class.active]="activeTab() === 'jwt'" (click)="setTab('jwt')">
+
+      JWT Flow
+
+    </button>
+
+    <button [class.active]="activeTab() === 'kafka'" (click)="setTab('kafka')">
+
+      Kafka Flow
+
+    </button>
+
+    <button [class.active]="activeTab() === 'redis'" (click)="setTab('redis')">
+
+      Redis Cache
+
+    </button>
+
+    <button [class.active]="activeTab() === 'gateway'" (click)="setTab('gateway')">
+
+      API Gateway
+
+    </button>
+
+    <button [class.active]="activeTab() === 'cqrs'" (click)="setTab('cqrs')">
+
+      CQRS
+
+    </button>
+
+  </div>
+
+  @if (activeTab() === 'jwt') {
+
+  <div class="diagram">
+
+    <div class="node">Client</div>
+
+    <div class="arrow">↓</div>
+
+    <div class="node">API Gateway</div>
+
+    <div class="arrow">↓</div>
+
+    <div class="node">Auth Service</div>
+
+    <div class="arrow">↓</div>
+
+    <div class="node highlight">JWT Token</div>
+
+  </div>
+
+  }
+
+  @if (activeTab() === 'kafka') {
+
+  <div class="diagram">
+
+    <div class="node">Order Service</div>
+
+    <div class="arrow">↓</div>
+
+    <div class="node highlight">Kafka Topic</div>
+
+    <div class="arrow">↓</div>
+
+    <div class="row">
+
+      <div class="node">Email</div>
+
+      <div class="node">Payment</div>
+
+      <div class="node">Notification</div>
+
+    </div>
+
+  </div>
+
+  }
+
+  @if (activeTab() === 'redis') {
+
+  <div class="diagram">
+
+    <div class="node">Client</div>
+
+    <div class="arrow">↓</div>
+
+    <div class="node">API</div>
+
+    <div class="arrow">↓</div>
+
+    <div class="node highlight">Redis Cache</div>
+
+    <div class="arrow">↓</div>
+
+    <div class="node">SQL Server</div>
+
+  </div>
+
+  }
+
+  @if (activeTab() === 'gateway') {
+
+  <div class="diagram">
+
+    <div class="node highlight">
+      API Gateway
+    </div>
+
+    <div class="row">
+
+      <div class="node">Auth</div>
+
+      <div class="node">Order</div>
+
+      <div class="node">Product</div>
+
+      <div class="node">Payment</div>
+
+    </div>
+
+  </div>
+
+  }
+
+  @if (activeTab() === 'cqrs') {
+
+  <div class="diagram">
+
+    <div class="row">
+
+      <div class="node">
+        Command Side
+      </div>
+
+      <div class="node">
+        Query Side
+      </div>
+
+    </div>
+
+    <div class="arrow">
+      ↓
+    </div>
+
+    <div class="node highlight">
+      Event Store
+    </div>
+
+  </div>
+
+  }
+
+</section>

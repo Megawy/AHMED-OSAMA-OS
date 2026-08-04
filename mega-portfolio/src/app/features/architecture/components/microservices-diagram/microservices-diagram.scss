@@ -1,0 +1,159 @@
+.diagram-section {
+  padding: 80px 6%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  color: #00e5ff;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.section-header h2 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.section-header p {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.diagram-flow {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.flow-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.flow-node {
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  min-width: 0;
+  flex: 1 1 180px;
+  max-width: 220px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.flow-node:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+}
+
+.node-icon {
+  font-size: 1.6rem;
+}
+
+.node-label {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.node-desc {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.gateway-node {
+  border-color: rgba(0, 229, 255, 0.3);
+  max-width: 260px;
+}
+
+.auth-node {
+  border-color: rgba(124, 58, 237, 0.3);
+  max-width: 260px;
+}
+
+.kafka-node {
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.redis-node {
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.service-node {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.flow-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.connector-line {
+  width: 2px;
+  height: 24px;
+  background: linear-gradient(to bottom, rgba(0, 229, 255, 0.4), rgba(0, 229, 255, 0.1));
+}
+
+.connector-arrow {
+  color: rgba(0, 229, 255, 0.5);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .diagram-section {
+    padding: 60px 5%;
+  }
+
+  .flow-node {
+    flex: 1 1 140px;
+    padding: 16px;
+  }
+
+  .node-desc {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .flow-row {
+    gap: 12px;
+  }
+
+  .flow-node {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}

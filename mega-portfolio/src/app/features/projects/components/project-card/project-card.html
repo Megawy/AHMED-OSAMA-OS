@@ -1,0 +1,49 @@
+<article class="card">
+
+  <div class="cover">
+
+    <img [src]="project.coverImage" [alt]="project.title">
+
+    @if(project.featured){
+
+    <span class="featured">
+
+      Featured
+
+    </span>
+
+    }
+
+  </div>
+
+  <div class="body">
+
+    <h2>
+
+      {{project.title}}
+
+    </h2>
+
+    <p>
+
+      {{project.shortDescription}}
+
+    </p>
+
+    <div class="stack">
+
+      @for(tech of project.technologies; track tech){
+
+      <span>
+
+        {{tech}}
+
+      </span>
+
+      }
+
+    </div>
+
+  </div>
+
+</article>

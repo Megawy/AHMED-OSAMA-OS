@@ -1,0 +1,12 @@
+<app-navbar (toggleMobileSidebar)="toggleMobileSidebar()"></app-navbar>
+
+<app-mobile-sidebar
+  [isOpen]="isMobileSidebarOpen()"
+  (close)="closeMobileSidebar()"
+></app-mobile-sidebar>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer></app-footer>

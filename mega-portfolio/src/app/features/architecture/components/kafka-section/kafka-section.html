@@ -1,0 +1,58 @@
+<section class="kafka-section">
+    <div class="section-inner">
+        <div class="kafka-content reveal">
+            <span class="section-badge">Event Streaming</span>
+            <h2>{{ 'ARCH.KAFKA_TITLE' | translate }}</h2>
+            <p>{{ 'ARCH.KAFKA_DESC' | translate }}</p>
+
+            <div class="kafka-features">
+                <div class="feature-card">
+                    <span class="feature-icon">📡</span>
+                    <h3>Pub/Sub Messaging</h3>
+                    <p>Decoupled producers and consumers with topic-based messaging.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔄</span>
+                    <h3>Event Sourcing</h3>
+                    <p>Immutable event log as the source of truth for domain changes.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Stream Processing</h3>
+                    <p>Real-time data processing with exactly-once semantics.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="kafka-visual reveal">
+            <div class="topic-flow">
+                <div class="producer">
+                    <span class="node-label">Producer</span>
+                    <div class="arrow-line"></div>
+                </div>
+                <div class="broker">
+                    <div class="topic">
+                        <span class="topic-name">orders.created</span>
+                        <div class="partitions">
+                            <span class="partition"></span>
+                            <span class="partition"></span>
+                            <span class="partition"></span>
+                        </div>
+                    </div>
+                    <div class="topic">
+                        <span class="topic-name">payments.processed</span>
+                        <div class="partitions">
+                            <span class="partition"></span>
+                            <span class="partition"></span>
+                            <span class="partition"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="consumer">
+                    <div class="arrow-line"></div>
+                    <span class="node-label">Consumer</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,100 @@
+<div class="dashboard">
+    <div class="page-header">
+        <h1>Dashboard</h1>
+        <p>Welcome back. Here's your portfolio overview.</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">🚀</div>
+            <div class="stat-body">
+                <span class="stat-value">{{ projectsCount() }}</span>
+                <span class="stat-label">Projects</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">✉️</div>
+            <div class="stat-body">
+                <span class="stat-value">{{ messagesCount() }}</span>
+                <span class="stat-label">Messages</span>
+            </div>
+            @if (unreadMessages() > 0) {
+            <span class="stat-badge">{{ unreadMessages() }} unread</span>
+            }
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-body">
+                <span class="stat-value">{{ technologiesCount() }}</span>
+                <span class="stat-label">Technologies</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-body">
+                <span class="stat-value">—</span>
+                <span class="stat-label">Visitors</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="panel recent-projects">
+            <div class="panel-header">
+                <h2>Recent Projects</h2>
+                <a routerLink="/admin/projects" class="view-all">View All →</a>
+            </div>
+            <div class="panel-body">
+                @for (project of recentProjects(); track project) {
+                <div class="list-item">
+                    <span class="item-title">{{ $any(project).title }}</span>
+                    <span class="item-meta">{{ $any(project).category }} · {{ $any(project).status }}</span>
+                </div>
+                } @empty {
+                <div class="empty">No projects yet</div>
+                }
+            </div>
+        </div>
+
+        <div class="panel recent-messages">
+            <div class="panel-header">
+                <h2>Recent Messages</h2>
+                <a routerLink="/admin/messages" class="view-all">View All →</a>
+            </div>
+            <div class="panel-body">
+                @for (msg of recentMessages(); track msg) {
+                <div class="list-item">
+                    <span class="item-title">{{ $any(msg).name }}</span>
+                    <span class="item-meta">{{ $any(msg).subject }}</span>
+                </div>
+                } @empty {
+                <div class="empty">No messages yet</div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="panel quick-actions">
+        <div class="panel-header">
+            <h2>Quick Actions</h2>
+        </div>
+        <div class="actions-grid">
+            @for (action of quickActions; track action.route) {
+            <a [routerLink]="action.route" class="action-card">
+                <span class="action-icon">{{ action.icon }}</span>
+                <span class="action-label">{{ action.label }}</span>
+            </a>
+            }
+        </div>
+    </div>
+
+    <div class="panel charts-placeholder">
+        <div class="panel-header">
+            <h2>Analytics</h2>
+        </div>
+        <div class="chart-placeholder">
+            <span>📊</span>
+            <p>Charts coming soon</p>
+        </div>
+    </div>
+</div>

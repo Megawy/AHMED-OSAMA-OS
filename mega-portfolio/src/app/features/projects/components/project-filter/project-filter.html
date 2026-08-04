@@ -1,0 +1,13 @@
+<section class="project-filter">
+
+  @for(filter of filters; track filter){
+
+  <button (click)="selected = filter" [class.active]="selected === filter">
+
+    {{filter}}
+
+  </button>
+
+  }
+
+</section>
