@@ -43,9 +43,9 @@ export const PROJECTS: SeedDoc[] = [
       shortDescription: 'SSR Angular portfolio with Firebase admin dashboard.',
       description:
         'Portfolio website built with Angular 21, SSR, Tailwind CSS v4 and Firebase (Firestore, Auth, Storage) with a full admin dashboard.',
-      category: 'web',
+      category: 'Full Stack',
       featured: true,
-      status: 'published',
+      status: 'Completed',
       coverImage: '',
       gallery: [],
       github: 'https://github.com/Megawy/mega-portfolio',

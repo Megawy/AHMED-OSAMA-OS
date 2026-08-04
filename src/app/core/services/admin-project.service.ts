@@ -3,7 +3,12 @@ import { orderBy, where } from 'firebase/firestore';
 
 import { FirestoreService } from '@core/firebase/firestore.service';
 import { StorageService } from '@core/firebase/storage.service';
-import { Project, ProjectCategory, ProjectStatus } from '@core/models/project.model';
+import {
+  Project,
+  ProjectCategory,
+  ProjectStatus,
+  normalizeProject,
+} from '@core/models/project.model';
 
 const COLLECTION = 'projects';
 
@@ -76,8 +81,9 @@ export class AdminProjectService {
         COLLECTION,
         orderBy(this.sortBy(), this.sortDir()),
       );
-      this.projects.set(items);
-      this.totalCount.set(items.length);
+      const normalized = items.map(normalizeProject);
+      this.projects.set(normalized);
+      this.totalCount.set(normalized.length);
     } catch (err) {
       this.error.set(err instanceof Error ? err.message : 'Failed to load projects.');
     } finally {

@@ -5,24 +5,33 @@ import { adminGuard, loginGuard } from '@core/guards/admin.guard';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./features/home/pages/home/home').then((m) => m.Home),
-  },
+    loadComponent: () => import('./shared/layout/shell/shell').then((m) => m.Shell),
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/home/pages/home/home').then((m) => m.Home),
+      },
 
-  {
-    path: 'projects',
-    loadComponent: () =>
-      import('./features/projects/pages/projects/projects').then((m) => m.Projects),
-  },
+      {
+        path: 'projects',
+        loadComponent: () =>
+          import('./features/projects/pages/projects/projects').then((m) => m.Projects),
+      },
 
-  {
-    path: 'architecture',
-    loadComponent: () =>
-      import('./features/architecture/pages/architecture/architecture').then((m) => m.Architecture),
-  },
+      {
+        path: 'architecture',
+        loadComponent: () =>
+          import('./features/architecture/pages/architecture/architecture').then(
+            (m) => m.Architecture,
+          ),
+      },
 
-  {
-    path: 'contact',
-    loadComponent: () => import('./features/contact/pages/contact/contact').then((m) => m.Contact),
+      {
+        path: 'contact',
+        loadComponent: () =>
+          import('./features/contact/pages/contact/contact').then((m) => m.Contact),
+      },
+    ],
   },
 
   {
