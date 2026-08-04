@@ -40,6 +40,27 @@ function isRetryable(err: unknown): boolean {
   return true;
 }
 
+/** Maps Firebase Storage error codes to actionable messages. */
+function describeUploadError(err: unknown): string {
+  const storageErr = err as StorageError;
+  const code = storageErr?.code ?? 'unknown';
+  switch (code.replace(/^storage\//, '')) {
+    case 'unauthorized':
+    case 'unauthenticated':
+      return 'Upload denied by security rules — make sure you are signed in as an active admin.';
+    case 'quota-exceeded':
+      return 'Storage quota exceeded — check the Firebase billing plan.';
+    case 'bucket-not-found':
+      return 'Storage bucket not found — run: npm run provision-storage';
+    case 'canceled':
+      return 'Upload was canceled.';
+    case 'retry-limit-expired':
+      return 'Upload failed after several retries — check your network connection.';
+    default:
+      return storageErr?.message ?? 'Upload failed due to a network error. Please try again.';
+  }
+}
+
 const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 @Injectable({
@@ -70,14 +91,20 @@ export class StorageService {
         };
       } catch (err) {
         lastError = err;
+        const code = (err as StorageError)?.code ?? 'unknown';
+        console.error(`[StorageService] upload attempt ${attempt}/${MAX_RETRIES} failed`, {
+          code,
+          path,
+          message: (err as Error)?.message,
+        });
         if (attempt < MAX_RETRIES && isRetryable(err)) {
           await wait(500 * 2 ** (attempt - 1));
           continue;
         }
-        throw err;
+        throw new Error(describeUploadError(lastError));
       }
     }
-    throw lastError;
+    throw new Error(describeUploadError(lastError));
   }
 
   async deleteFile(path: string): Promise<void> {

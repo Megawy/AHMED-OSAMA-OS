@@ -18,6 +18,7 @@
     "seed:update": "tsx scripts/seed.ts --update",
     "reset-db": "tsx scripts/reset.ts --force",
     "provision-storage": "node scripts/provision-storage.cjs",
+    "storage:cors": "node scripts/apply-cors.cjs",
     "create-admin": "tsx scripts/create-admin.ts",
     "emulator": "firebase emulators:start",
     "deploy-db": "firebase deploy --only firestore,storage",
