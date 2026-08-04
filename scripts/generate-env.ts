@@ -4,6 +4,11 @@
  *
  * The generated files are git-ignored: secrets live only in `.env`.
  * Run via `npm run env:generate` (also hooked into prestart / prebuild).
+ *
+ * CI/CD (Vercel, GitHub Actions, ...): there is no `.env` on disk, so the
+ * script falls back to variables provided via `process.env` (platform env
+ * vars). Missing required vars downgrade to a warning in CI so the build
+ * can proceed; locally the strict error is kept.
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -12,11 +17,38 @@ const ROOT = process.cwd();
 const ENV_FILE = resolve(ROOT, '.env');
 const OUT_DIR = resolve(ROOT, 'src', 'environments');
 
+const REQUIRED_VARS = [
+  'FIREBASE_API_KEY',
+  'FIREBASE_AUTH_DOMAIN',
+  'FIREBASE_PROJECT_ID',
+  'FIREBASE_STORAGE_BUCKET',
+  'FIREBASE_MESSAGING_SENDER_ID',
+  'FIREBASE_APP_ID',
+  'PORTFOLIO_URL_PROD',
+  'API_BASE_URL_PROD',
+];
+
+const IS_CI = !!(
+  process.env.CI ||
+  process.env.VERCEL ||
+  process.env.GITHUB_ACTIONS ||
+  process.env.NETLIFY ||
+  process.env.BUILD_ID
+);
+
 // ---------------------------------------------------------------------------
 // .env loader (standalone: must not pull in scripts/lib.ts firebase bootstrap)
 // ---------------------------------------------------------------------------
 function loadEnv(): void {
   if (!existsSync(ENV_FILE)) {
+    const hasProcessEnv = REQUIRED_VARS.some((name) => process.env[name]);
+    if (IS_CI || hasProcessEnv) {
+      console.log(
+        'ℹ .env not found — falling back to process.env (CI/CD mode). ' +
+          'Provide the variables via your platform\'s environment settings.',
+      );
+      return;
+    }
     console.error('✗ .env not found — copy .env.example to .env and fill in your values');
     process.exit(1);
   }
@@ -116,9 +148,17 @@ const targets: Target[] = [
 const contents = targets.map((t) => [t.file, render(t)] as const);
 
 if (missing.length) {
-  console.error(`✗ Missing env var(s) in .env: ${[...new Set(missing)].join(', ')}`);
-  console.error('  See .env.example for the full list.');
-  process.exit(1);
+  const unique = [...new Set(missing)];
+  if (IS_CI) {
+    console.warn(
+      `⚠ Missing env var(s): ${unique.join(', ')} — generated with empty placeholders ` +
+        '(CI/CD mode). Set them in your platform\'s environment settings for a working build.',
+    );
+  } else {
+    console.error(`✗ Missing env var(s) in .env: ${unique.join(', ')}`);
+    console.error('  See .env.example for the full list.');
+    process.exit(1);
+  }
 }
 
 for (const [file, content] of contents) {
