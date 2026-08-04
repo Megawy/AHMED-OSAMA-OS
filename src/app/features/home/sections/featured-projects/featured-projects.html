@@ -16,9 +16,11 @@
 
   </div>
 
+  @if (loaded() && projects().length) {
+
   <div class="projects-grid">
 
-    @for (project of projects; track project.title) {
+    @for (project of projects(); track project.id ?? project.slug) {
 
     <div class="project-card">
 
@@ -27,7 +29,7 @@
       </h3>
 
       <p>
-        {{ project.description }}
+        {{ project.shortDescription || project.description }}
       </p>
 
       <div class="stack">
@@ -71,5 +73,7 @@
     }
 
   </div>
+
+  }
 
 </section>
