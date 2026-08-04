@@ -85,6 +85,12 @@ import {
         position: relative;
       }
 
+      /* Keep an open panel above sibling cards (e.g. sticky .form-side cards
+         in the project drawer would otherwise paint over the options). */
+      :host(.open) {
+        z-index: 40;
+      }
+
       .select.disabled .trigger {
         opacity: 0.45;
         cursor: not-allowed;
@@ -219,6 +225,7 @@ import {
     `,
   ],
   host: {
+    '[class.open]': 'open()',
     '(document:click)': 'onDocClick($event)',
   },
 })

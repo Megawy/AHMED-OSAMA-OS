@@ -3,7 +3,7 @@
   border-radius: 18px;
   background: rgba(15, 23, 42, 0.35);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
-  overflow: hidden;
+  /* No overflow:hidden — it would clip open admin-select dropdown panels. */
 
   &.danger {
     border-color: rgba(239, 68, 68, 0.2);
