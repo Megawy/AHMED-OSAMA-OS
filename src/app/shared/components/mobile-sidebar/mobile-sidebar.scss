@@ -140,6 +140,7 @@
 
   .resume-btn {
     width: 100%;
+    display: inline-block;
     border: none;
     background: #00e5ff;
     color: #030712;
@@ -147,6 +148,8 @@
     border-radius: 12px;
     font-weight: 700;
     font-size: 0.95rem;
+    text-align: center;
+    text-decoration: none;
     cursor: pointer;
     transition: all 0.3s ease;
 

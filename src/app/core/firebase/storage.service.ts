@@ -7,6 +7,7 @@ import {
   getDownloadURL,
   listAll,
   type FirebaseStorage,
+  type StorageError,
 } from 'firebase/storage';
 
 import { firebaseApp } from './firebase.config';
@@ -18,6 +19,28 @@ export interface UploadedFile {
   size: number;
   type: string;
 }
+
+const MAX_RETRIES = 3;
+
+/** Errors that will never succeed on retry (permissions / config). */
+const NON_RETRYABLE_CODES = new Set([
+  'unauthorized',
+  'unauthenticated',
+  'quota-exceeded',
+  'bucket-not-found',
+  'project-not-found',
+  'invalid-argument',
+]);
+
+function isRetryable(err: unknown): boolean {
+  const code = (err as StorageError)?.code?.replace(/^storage\//, '');
+  if (code && NON_RETRYABLE_CODES.has(code)) return false;
+  // Network-level failures (ERR_HTTP2_PROTOCOL_ERROR, connection resets, ...)
+  // surface as 'storage/unknown' or generic errors — safe to retry.
+  return true;
+}
+
+const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 @Injectable({
   providedIn: 'root',
@@ -31,16 +54,30 @@ export class StorageService {
     const path = `${folder}/${timestamp}_${safeName}`;
     const storageRef = ref(this.storage, path);
 
-    const snapshot = await uploadBytes(storageRef, file);
-    const url = await getDownloadURL(snapshot.ref);
-
-    return {
-      name: file.name,
-      url,
-      path,
-      size: file.size,
-      type: file.type,
-    };
+    // Transient transport errors (e.g. ERR_HTTP2_PROTOCOL_ERROR) are common on
+    // flaky networks — retry with exponential backoff before giving up.
+    let lastError: unknown;
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        const snapshot = await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(snapshot.ref);
+        return {
+          name: file.name,
+          url,
+          path,
+          size: file.size,
+          type: file.type,
+        };
+      } catch (err) {
+        lastError = err;
+        if (attempt < MAX_RETRIES && isRetryable(err)) {
+          await wait(500 * 2 ** (attempt - 1));
+          continue;
+        }
+        throw err;
+      }
+    }
+    throw lastError;
   }
 
   async deleteFile(path: string): Promise<void> {

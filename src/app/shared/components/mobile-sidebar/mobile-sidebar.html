@@ -53,9 +53,17 @@
     <div class="drawer-footer">
       <app-language-switcher></app-language-switcher>
 
-      <button type="button" class="resume-btn" (click)="onClose()">
+      @if (resumeUrl()) {
+      <a
+        class="resume-btn"
+        [href]="resumeUrl()"
+        target="_blank"
+        rel="noopener noreferrer"
+        (click)="onClose()"
+      >
         {{ 'NAV.RESUME' | translate }}
-      </button>
+      </a>
+      }
     </div>
   </aside>
 </div>

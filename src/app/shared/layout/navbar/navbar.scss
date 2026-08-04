@@ -80,6 +80,7 @@
 }
 
 .resume-btn {
+  display: inline-block;
   border: none;
   background: #00e5ff;
   color: #030712;
@@ -88,6 +89,7 @@
   cursor: pointer;
   font-weight: 700;
   font-size: 0.9rem;
+  text-decoration: none;
   transition: all 0.3s ease;
   white-space: nowrap;
 

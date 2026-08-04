@@ -23,9 +23,11 @@
     <div class="nav-actions">
       <app-language-switcher class="desktop-lang-switcher"></app-language-switcher>
 
-      <button type="button" class="resume-btn">
+      @if (resumeUrl()) {
+      <a class="resume-btn" [href]="resumeUrl()" target="_blank" rel="noopener noreferrer">
         {{ 'NAV.RESUME' | translate }}
-      </button>
+      </a>
+      }
 
       <button
         type="button"

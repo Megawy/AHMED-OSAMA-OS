@@ -22,6 +22,7 @@ export class AdminSettings implements OnInit {
   readonly error = this.service.error;
   readonly saving = this.service.saving;
   readonly saved = this.service.saved;
+  readonly uploadingCv = this.service.uploadingCv;
 
   ngOnInit(): void {
     this.service.load().then(() => {
@@ -59,5 +60,22 @@ export class AdminSettings implements OnInit {
 
   async save(): Promise<void> {
     await this.service.save(this.form());
+  }
+
+  async onCvUpload(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file) return;
+    try {
+      const url = await this.service.uploadCv(file);
+      this.updateField('resumeUrl', url);
+    } catch {
+      // Error message is surfaced via service.error().
+    }
+  }
+
+  removeCv(): void {
+    this.updateField('resumeUrl', '');
   }
 }

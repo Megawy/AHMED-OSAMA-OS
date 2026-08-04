@@ -49,8 +49,31 @@
           <input id="set-location" [ngModel]="form().location" (ngModelChange)="updateField('location', $event)"
             name="location" placeholder="City, Country" />
         </div>
+      </div>
+    </app-admin-card>
+
+    <app-admin-card title="Resume / CV" description="The PDF shown when visitors click the Resume button.">
+      <div class="cv-manager">
+        @if (form().resumeUrl) {
+        <div class="cv-current">
+          <span class="cv-icon" aria-hidden="true">📄</span>
+          <a [href]="form().resumeUrl" target="_blank" rel="noopener noreferrer" class="cv-link">
+            View current CV
+          </a>
+          <button class="btn-icon" type="button" (click)="removeCv()" aria-label="Remove CV" title="Remove">🗑️</button>
+        </div>
+        }
+
+        <div class="cv-actions">
+          <button class="btn-primary" type="button" [disabled]="uploadingCv()" (click)="cvInput.click()">
+            {{ uploadingCv() ? 'Uploading...' : (form().resumeUrl ? 'Replace CV' : '📁 Upload CV') }}
+          </button>
+          <span class="cv-hint">PDF only · Max 5MB</span>
+        </div>
+        <input #cvInput type="file" accept="application/pdf" (change)="onCvUpload($event)" hidden />
+
         <div class="field">
-          <label for="set-resume">Resume URL</label>
+          <label for="set-resume">Or paste a Resume URL</label>
           <input id="set-resume" [ngModel]="form().resumeUrl" (ngModelChange)="updateField('resumeUrl', $event)"
             name="resumeUrl" placeholder="https://..." />
         </div>

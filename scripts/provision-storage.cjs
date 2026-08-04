@@ -93,6 +93,24 @@ async function main() {
       ? '✓ Linked as default bucket'
       : `! defaultBucket link skipped (${link.status}) — firebase.json pins the bucket explicitly`,
   );
+
+  // 4. Apply CORS so browser uploads (XHR preflight) succeed from any origin.
+  //    Without this, uploads fail with ERR_FAILED / ERR_HTTP2_PROTOCOL_ERROR.
+  const cors = [
+    {
+      origin: ['*'],
+      method: ['GET', 'HEAD', 'POST', 'PUT', 'OPTIONS', 'DELETE'],
+      responseHeader: ['Content-Type', 'Content-Disposition', 'x-goog-resumable'],
+      maxAgeSeconds: 3600,
+    },
+  ];
+  res = await fetch(`https://storage.googleapis.com/storage/v1/b/${bucketName}?fields=cors`, {
+    method: 'PATCH',
+    headers,
+    body: JSON.stringify({ cors }),
+  });
+  if (!res.ok) throw new Error(`CORS config failed: ${res.status} ${await res.text()}`);
+  console.log('✓ CORS configuration applied to bucket');
 }
 
 main()

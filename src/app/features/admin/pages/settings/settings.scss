@@ -71,6 +71,52 @@
   }
 }
 
+.cv-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.cv-current {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+
+  .cv-icon {
+    font-size: 1.125rem;
+  }
+
+  .cv-link {
+    flex: 1;
+    color: #00e5ff;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.cv-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  .cv-hint {
+    color: #64748b;
+    font-size: 0.75rem;
+  }
+}
+
 @media (max-width: 600px) {
   .social-inputs {
     flex-direction: column;
