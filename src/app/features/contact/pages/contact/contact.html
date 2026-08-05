@@ -3,6 +3,7 @@
         <span class="badge">{{ 'CONTACT.TITLE' | translate }}</span>
         <h1>{{ 'CONTACT.SUBTITLE' | translate }}</h1>
     </div>
+    <img class="hero-illustration" src="/assets/illustrations/brand-communication.svg" alt="" aria-hidden="true" />
 </section>
 
 <section class="contact-body">
@@ -35,7 +36,7 @@
 
         @if (sent()) {
         <div class="success-message">
-            <span class="success-icon">✅</span>
+            <img class="success-illustration" src="/assets/illustrations/ok.svg" alt="" aria-hidden="true" />
             <h3>{{ 'CONTACT.SUCCESS' | translate }}</h3>
             <button type="button" class="reset-btn" (click)="resetForm()">
                 {{ 'CONTACT.SEND_ANOTHER' | translate }}

@@ -11,6 +11,8 @@ export class EmptyState {
   @Input({ required: true }) message!: string;
   @Input() icon = '🔍';
   @Input() actionLabel = '';
+  /** Illustration shown above the text. Pass '' to fall back to the emoji icon. */
+  @Input() image = '/assets/illustrations/no-data.svg';
 
   readonly action = output<void>();
 

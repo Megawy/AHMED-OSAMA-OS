@@ -6,6 +6,14 @@
   text-align: center;
 }
 
+.hero-illustration {
+  display: block;
+  width: 240px;
+  max-width: 60%;
+  height: auto;
+  margin: 32px auto 0;
+}
+
 .badge {
   display: inline-block;
   padding: 8px 16px;
@@ -243,6 +251,14 @@
   font-size: 3rem;
   display: block;
   margin-bottom: 16px;
+}
+
+.success-illustration {
+  display: block;
+  width: 180px;
+  max-width: 60%;
+  height: auto;
+  margin: 0 auto 16px;
 }
 
 .success-message h3 {

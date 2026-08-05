@@ -74,7 +74,7 @@
   <div class="alert error">{{ error() }}</div>
   } @else if (filtered().length === 0) {
   <div class="empty-state">
-    <div class="empty-icon">🚀</div>
+    <img class="empty-illustration" src="/assets/illustrations/no-data.svg" alt="" aria-hidden="true" />
     <h3>No projects found</h3>
     <p>Create your first project or adjust your search filters to see results.</p>
     <button class="btn-primary" (click)="openCreate()">Create Project</button>

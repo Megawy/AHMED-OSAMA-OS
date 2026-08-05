@@ -1084,6 +1084,13 @@ html[dir='rtl'] {
     opacity: 0.4;
   }
 
+  .empty-illustration {
+    width: 180px;
+    max-width: 60%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+
   h3 {
     color: #94a3b8;
     font-size: 0.9375rem;

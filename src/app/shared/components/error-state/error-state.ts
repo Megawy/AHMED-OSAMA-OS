@@ -9,6 +9,8 @@ import { Component, Input, output } from '@angular/core';
 export class ErrorState {
   @Input({ required: true }) message!: string;
   @Input() retryLabel = 'Try Again';
+  /** Illustration shown above the text. Pass '' to fall back to the icon. */
+  @Input() image = '/assets/illustrations/oh-no.svg';
 
   readonly retry = output<void>();
 
