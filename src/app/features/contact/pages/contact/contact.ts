@@ -13,6 +13,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 import { ContactService } from '@core/services/contact.service';
 import { AnimationService } from '@core/services/animation.service';
+import { SettingsService, LOCAL_CV_PATH } from '@core/services/settings.service';
 
 interface FormData {
   name: string;
@@ -41,6 +42,10 @@ export class Contact {
   private readonly el = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly settingsService = inject(SettingsService);
+
+  /** CV link: the admin-uploaded resume if present, else the bundled PDF. */
+  readonly resumeUrl = signal<string>(LOCAL_CV_PATH);
 
   readonly form = signal<FormData>({
     name: '',
@@ -83,47 +88,55 @@ export class Contact {
     },
   ];
 
-  readonly contactInfo = [
+  readonly contactInfo = computed(() => [
     {
       icon: '📧',
       label: 'Email',
       value: 'ahmed.osama001@outlook.com',
       link: 'mailto:ahmed.osama001@outlook.com',
+      download: false,
     },
     {
       icon: '📱',
       label: 'Phone',
       value: '+20 100 227 5366',
       link: 'tel:+201002275366',
+      download: false,
     },
     {
       icon: '📍',
       label: 'Location',
       value: 'Cairo, Egypt',
       link: null,
+      download: false,
     },
     {
       icon: '🐙',
       label: 'GitHub',
       value: 'github.com/Megawy',
       link: 'https://github.com/Megawy',
+      download: false,
     },
     {
       icon: '💼',
       label: 'LinkedIn',
       value: 'linkedin.com/in/ahmed-osama-72a255241',
       link: 'https://linkedin.com/in/ahmed-osama-72a255241',
+      download: false,
     },
     {
       icon: '📄',
       label: 'Resume',
       value: 'Download CV',
-      link: '#',
+      link: this.resumeUrl(),
+      download: true,
     },
-  ];
+  ]);
 
   constructor() {
     afterNextRender(async () => {
+      this.resumeUrl.set(await this.settingsService.getResumeUrl());
+
       const host = this.el.nativeElement as HTMLElement;
       const elements = Array.from(host.querySelectorAll('.reveal'));
       const cleanup = await this.animations.reveal(elements);

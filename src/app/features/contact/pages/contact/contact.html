@@ -10,10 +10,11 @@
     <div class="info-section reveal">
         <h2 class="section-title">{{ 'CONTACT.INFO_TITLE' | translate }}</h2>
         <div class="info-grid">
-            @for (item of contactInfo; track item.label) {
+            @for (item of contactInfo(); track item.label) {
             <a [href]="item.link ?? ''" class="info-card" [class.disabled]="!item.link"
                 [attr.target]="item.link?.startsWith('http') ? '_blank' : null"
-                [attr.rel]="item.link?.startsWith('http') ? 'noopener' : null">
+                [attr.rel]="item.link?.startsWith('http') ? 'noopener' : null"
+                [attr.download]="item.download ? '' : null">
                 <span class="info-icon">{{ item.icon }}</span>
                 <div class="info-text">
                     <span class="info-label">{{ item.label }}</span>
