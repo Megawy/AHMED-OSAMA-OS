@@ -23,6 +23,8 @@ import {
 export class AdminProjects implements OnInit {
   private readonly service = inject(AdminProjectService);
 
+  private static readonly MAX_COVER_SIZE = 5 * 1024 * 1024; // 5MB
+
   readonly categories = PROJECT_CATEGORIES;
   readonly formCategories = PROJECT_CATEGORIES.filter((c) => c !== 'All');
   readonly statuses = Object.keys(PROJECT_STATUS_LABELS) as ProjectStatus[];
@@ -164,10 +166,23 @@ export class AdminProjects implements OnInit {
   async onCoverUpload(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;
     if (!input.files?.[0]) return;
+    const file = input.files[0];
+    input.value = '';
+    if (file.size > AdminProjects.MAX_COVER_SIZE) {
+      this.error.set(
+        'Image is larger than 5MB — compress it or paste an image URL in the Media section instead.',
+      );
+      return;
+    }
     this.uploadingCover.set(true);
     try {
-      const result = await this.service.uploadCover(input.files[0]);
+      const result = await this.service.uploadCover(file);
       this.updateField('coverImage', result.url);
+    } catch (err) {
+      this.error.set(
+        (err instanceof Error ? err.message : 'Upload failed.') +
+          ' You can paste an image URL below instead.',
+      );
     } finally {
       this.uploadingCover.set(false);
     }
@@ -187,10 +202,21 @@ export class AdminProjects implements OnInit {
     this.isDragOver.set(false);
     const file = event.dataTransfer?.files?.[0];
     if (!file || !file.type.startsWith('image/')) return;
+    if (file.size > AdminProjects.MAX_COVER_SIZE) {
+      this.error.set(
+        'Image is larger than 5MB — compress it or paste an image URL in the Media section instead.',
+      );
+      return;
+    }
     this.uploadingCover.set(true);
     try {
       const result = await this.service.uploadCover(file);
       this.updateField('coverImage', result.url);
+    } catch (err) {
+      this.error.set(
+        (err instanceof Error ? err.message : 'Upload failed.') +
+          ' You can paste an image URL below instead.',
+      );
     } finally {
       this.uploadingCover.set(false);
     }

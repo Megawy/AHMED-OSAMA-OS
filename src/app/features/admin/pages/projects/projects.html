@@ -143,6 +143,9 @@
       </div>
 
       <div class="drawer-body">
+        @if (error()) {
+        <div class="alert error" role="alert">{{ error() }}</div>
+        }
         <div class="form-layout">
           <div class="form-main">
             <!-- Section: General Information -->
@@ -188,7 +191,7 @@
             </app-admin-card>
 
             <!-- Section: Media -->
-            <app-admin-card title="Media" description="Cover image — JPG, PNG or WebP, max 5MB.">
+            <app-admin-card title="Media" description="Cover image — upload a file or paste an image URL.">
               @if (form().coverImage && !uploadingCover()) {
               <div class="preview-card">
                 <img [src]="form().coverImage!" alt="Cover preview" />
@@ -215,6 +218,14 @@
               }
               <input #coverInput type="file" accept="image/jpeg,image/png,image/webp" (change)="onCoverUpload($event)"
                 hidden />
+
+              <div class="field">
+                <label for="proj-cover-url">Or paste an image URL</label>
+                <input id="proj-cover-url" [ngModel]="form().coverImage"
+                  (ngModelChange)="updateField('coverImage', $event)" name="coverUrl"
+                  placeholder="https://example.com/image.jpg" type="url" />
+                <span class="hint">Works with any public image link — no upload needed</span>
+              </div>
             </app-admin-card>
 
             <!-- Section: Links -->
