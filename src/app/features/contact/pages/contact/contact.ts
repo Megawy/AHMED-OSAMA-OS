@@ -198,7 +198,11 @@ export class Contact {
     this.validateField(field);
   }
 
-  async onSubmit(): Promise<void> {
+  async onSubmit(event: Event): Promise<void> {
+    // Native (submit) instead of (ngSubmit): FormsModule/NgForm isn't used on
+    // this page, so the default GET navigation must be prevented manually.
+    event.preventDefault();
+
     const fields: (keyof FormData)[] = ['name', 'email', 'subject', 'message'];
     fields.forEach((f) => {
       this.touched.update((t) => ({ ...t, [f]: true }));
