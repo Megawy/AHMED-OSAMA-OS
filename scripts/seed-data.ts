@@ -94,6 +94,18 @@ export const TECHNOLOGIES: SeedDoc[] = [
   tech('scss', 'SCSS', 'frontend', 3, '#CF649A', 25),
   tech('html5', 'HTML5', 'frontend', 4, '#E34F26', 26),
   tech('css3', 'CSS3', 'frontend', 4, '#1572B6', 27),
+  // Auto-detected from repo/portfolio content (dependencies, SSR server,
+  // deployment targets, project descriptions).
+  tech('rxjs', 'RxJS', 'library', 2, '#B7178C', 29),
+  tech('nodejs', 'Node.js', 'backend', 2, '#339933', 30),
+  tech('express', 'Express', 'backend', 1, '#000000', 31),
+  tech('gsap', 'GSAP', 'library', 2, '#0AE448', 32),
+  tech('azure', 'Azure', 'cloud', 2, '#0078D4', 33),
+  tech('gitlab-cicd', 'GitLab CI/CD', 'devops', 1, '#FC6D26', 34),
+  tech('vitest', 'Vitest', 'tools', 1, '#6E9F43', 35),
+  tech('firebase-hosting', 'Firebase Hosting', 'cloud', 1, '#FFCA28', 36),
+  tech('rabbitmq', 'RabbitMQ', 'backend', 1, '#FF6600', 37),
+  tech('serilog', 'Serilog', 'library', 1, '#1E88E5', 38),
 ];
 
 export const SKILLS: SeedDoc[] = [
