@@ -71,7 +71,7 @@ export const SERVICES: ArchitectureService[] = [
 export const TECH_STACK: TechStackItem[] = [
   {
     category: 'Backend',
-    items: ['.NET 9', 'C#', 'MediatR', 'FluentValidation', 'AutoMapper'],
+    items: ['.NET 10', 'C#', 'MediatR', 'FluentValidation', 'AutoMapper'],
   },
   {
     category: 'Messaging',

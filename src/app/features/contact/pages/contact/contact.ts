@@ -79,7 +79,7 @@ export class Contact {
     {
       question: 'What is your preferred technology stack?',
       answer:
-        '.NET 9 backend, Angular frontend, Kafka for messaging, Redis for caching, and Azure for cloud.',
+        '.NET 10 backend, Angular frontend, Kafka for messaging, Redis for caching, and Azure for cloud.',
     },
   ];
 

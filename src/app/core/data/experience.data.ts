@@ -15,7 +15,7 @@ export const EXPERIENCES: Experience[] = [
       'Reduced deployment time by 80% through Docker containerization and CI/CD',
       'Mentored team of 12 engineers on DDD and clean architecture principles',
     ],
-    technologies: ['.NET 9', 'Kafka', 'Redis', 'Docker', 'Kubernetes', 'SQL Server'],
+    technologies: ['.NET 10', 'Kafka', 'Redis', 'Docker', 'Kubernetes', 'SQL Server'],
     order: 1,
     createdAt: new Date(),
     updatedAt: new Date(),
