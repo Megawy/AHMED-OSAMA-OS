@@ -10,6 +10,12 @@
   transition: 0.35s;
 
   cursor: pointer;
+
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
 }
 
 .card:hover {
@@ -23,9 +29,37 @@
 .cover {
   height: 220px;
 
+  flex-shrink: 0;
+
   background: linear-gradient(135deg, #2563eb, #06b6d4);
 
   position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.cover img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.cover-fallback {
+  font-size: 4rem;
+
+  font-weight: 800;
+
+  color: rgba(255, 255, 255, 0.9);
+
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .featured {
@@ -50,16 +84,32 @@
 
 .body {
   padding: 2rem;
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
 }
 
 .body h2 {
   margin-bottom: 1rem;
+
+  font-size: 1.35rem;
+
+  line-height: 1.35;
+
+  overflow-wrap: anywhere;
 }
 
 .body p {
   color: #9ca3af;
 
   line-height: 1.7;
+
+  font-size: 0.95rem;
+
+  overflow-wrap: anywhere;
 }
 
 .stack {
@@ -69,7 +119,11 @@
 
   gap: 10px;
 
-  margin: 2rem 0;
+  margin: 2rem 0 0;
+
+  margin-top: auto;
+
+  padding-top: 2rem;
 }
 
 .stack span {

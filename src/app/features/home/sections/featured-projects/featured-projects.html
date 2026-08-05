@@ -24,6 +24,12 @@
 
     <div class="project-card">
 
+      @if (project.coverImage) {
+      <div class="card-cover">
+        <img [src]="project.coverImage" [alt]="project.title" loading="lazy" />
+      </div>
+      }
+
       <h3>
         {{ project.title }}
       </h3>
