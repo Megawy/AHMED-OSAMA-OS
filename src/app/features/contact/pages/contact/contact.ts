@@ -65,28 +65,8 @@ export class Contact {
     () => !this.sending() && !this.sent() && this.isFormValid(),
   );
 
-  readonly faqs = [
-    {
-      question: 'What is your typical response time?',
-      answer:
-        'I usually respond within 24 hours for business inquiries and technical consultations.',
-    },
-    {
-      question: 'What types of projects do you take on?',
-      answer:
-        'Enterprise microservices, distributed systems, cloud migrations, and Angular web applications.',
-    },
-    {
-      question: 'Do you offer ongoing maintenance?',
-      answer:
-        'Yes, I provide long-term support contracts including monitoring, updates, and performance optimization.',
-    },
-    {
-      question: 'What is your preferred technology stack?',
-      answer:
-        '.NET 10 backend, Angular frontend, Kafka for messaging, Redis for caching, and Azure for cloud.',
-    },
-  ];
+  /** FAQ identifiers — text lives in i18n files under CONTACT.FAQ. */
+  readonly faqs = ['1', '2', '3', '4'];
 
   readonly contactInfo = computed(() => [
     {

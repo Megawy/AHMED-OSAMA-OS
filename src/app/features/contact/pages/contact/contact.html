@@ -115,10 +115,10 @@
 <section class="faq-section reveal">
     <h2 class="section-title">{{ 'CONTACT.FAQ_TITLE' | translate }}</h2>
     <div class="faq-list">
-        @for (faq of faqs; track faq.question) {
+        @for (faq of faqs; track faq) {
         <div class="faq-item">
-            <h3 class="faq-question">{{ faq.question }}</h3>
-            <p class="faq-answer">{{ faq.answer }}</p>
+            <h3 class="faq-question">{{ 'CONTACT.FAQ.Q' + faq | translate }}</h3>
+            <p class="faq-answer">{{ 'CONTACT.FAQ.A' + faq | translate }}</p>
         </div>
         }
     </div>

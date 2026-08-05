@@ -78,6 +78,16 @@
     "SEND_ANOTHER": "Send Another Message",
     "SUCCESS": "Thank you! Your message has been sent successfully.",
     "FAQ_TITLE": "Frequently Asked Questions",
+    "FAQ": {
+      "Q1": "What is your typical response time?",
+      "A1": "I usually respond within 24 hours for business inquiries and technical consultations.",
+      "Q2": "What types of projects do you take on?",
+      "A2": "Enterprise microservices, distributed systems, cloud migrations, and Angular web applications.",
+      "Q3": "Do you offer ongoing maintenance?",
+      "A3": "Yes, I provide long-term support contracts including monitoring, updates, and performance optimization.",
+      "Q4": "What is your preferred technology stack?",
+      "A4": ".NET backend, Angular frontend, Kafka for messaging, Redis for caching, and Azure for cloud."
+    },
     "CTA_TITLE": "Ready to Start Your Next Project?",
     "CTA_DESC": "Let's discuss how I can help you build scalable, production-grade systems.",
     "CTA_BTN": "Email Me Directly"
