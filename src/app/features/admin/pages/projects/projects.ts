@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { AdminProjectService } from '@core/services/admin-project.service';
+import { AdminTechnologyService } from '@core/services/admin-technology.service';
 import { AdminCard } from '@features/admin/components/admin-card/admin-card';
 import { AdminSelect } from '@features/admin/components/admin-select/admin-select';
 import {
@@ -22,6 +23,7 @@ import {
 })
 export class AdminProjects implements OnInit {
   private readonly service = inject(AdminProjectService);
+  readonly techService = inject(AdminTechnologyService);
 
   private static readonly MAX_COVER_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -53,6 +55,7 @@ export class AdminProjects implements OnInit {
 
   ngOnInit(): void {
     this.service.load();
+    this.techService.load();
   }
 
   openCreate(): void {
@@ -133,6 +136,16 @@ export class AdminProjects implements OnInit {
 
   async toggleFeatured(project: Project): Promise<void> {
     await this.service.toggleFeatured(project.id!, project.featured);
+  }
+
+  isTechSelected(id: string): boolean {
+    return (this.form().technologies ?? []).includes(id);
+  }
+
+  toggleTechnology(id: string): void {
+    const current = this.form().technologies ?? [];
+    const next = current.includes(id) ? current.filter((t) => t !== id) : [...current, id];
+    this.updateField('technologies', next);
   }
 
   onSearch(event: Event): void {

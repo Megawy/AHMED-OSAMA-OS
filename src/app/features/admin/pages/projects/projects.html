@@ -190,6 +190,25 @@
               </div>
             </app-admin-card>
 
+            <!-- Section: Technologies -->
+            <app-admin-card title="Technologies"
+              description="Pick the technologies used in this project (managed in the Technologies page).">
+              @if (techService.loading()) {
+              <span class="hint">Loading technologies...</span>
+              } @else if (!techService.technologies().length) {
+              <span class="hint">No technologies yet — add them in the Technologies page first.</span>
+              } @else {
+              <div class="tech-picker">
+                @for (tech of techService.technologies(); track tech.id) {
+                <button type="button" class="tech-chip" [class.selected]="isTechSelected(tech.id!)"
+                  (click)="toggleTechnology(tech.id!)" [attr.aria-pressed]="isTechSelected(tech.id!)">
+                  {{ tech.name }}
+                </button>
+                }
+              </div>
+              }
+            </app-admin-card>
+
             <!-- Section: Media -->
             <app-admin-card title="Media" description="Cover image — upload a file or paste an image URL.">
               @if (form().coverImage && !uploadingCover()) {
