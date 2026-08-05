@@ -104,6 +104,15 @@
       text-decoration: underline;
     }
   }
+
+  .cv-source {
+    color: #64748b;
+    font-size: 0.6875rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
+  }
 }
 
 .cv-actions {

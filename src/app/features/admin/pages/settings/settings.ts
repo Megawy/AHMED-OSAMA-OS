@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AdminCard } from '@features/admin/components/admin-card/admin-card';
 
 import { AdminSettingsService } from '@core/services/admin-settings.service';
+import { LOCAL_CV_PATH } from '@core/services/settings.service';
 import { type SiteSettings, type SocialLink } from '@core/models/settings.model';
 
 @Component({
@@ -23,6 +24,14 @@ export class AdminSettings implements OnInit {
   readonly saving = this.service.saving;
   readonly saved = this.service.saved;
   readonly uploadingCv = this.service.uploadingCv;
+
+  /** The CV bundled with the app — shown when no resume was uploaded yet. */
+  readonly localCv = LOCAL_CV_PATH;
+
+  /** The CV currently served to visitors (uploaded one wins over the bundled one). */
+  get effectiveCvUrl(): string {
+    return this.form().resumeUrl || this.localCv;
+  }
 
   ngOnInit(): void {
     this.service.load().then(() => {

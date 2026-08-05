@@ -54,15 +54,18 @@
 
     <app-admin-card title="Resume / CV" description="The PDF shown when visitors click the Resume button.">
       <div class="cv-manager">
-        @if (form().resumeUrl) {
         <div class="cv-current">
           <span class="cv-icon" aria-hidden="true">📄</span>
-          <a [href]="form().resumeUrl" target="_blank" rel="noopener noreferrer" class="cv-link">
+          <a [href]="effectiveCvUrl" target="_blank" rel="noopener noreferrer" class="cv-link">
             View current CV
           </a>
+          @if (form().resumeUrl) {
+          <span class="cv-source">uploaded</span>
           <button class="btn-icon" type="button" (click)="removeCv()" aria-label="Remove CV" title="Remove">🗑️</button>
+          } @else {
+          <span class="cv-source">bundled with the app</span>
+          }
         </div>
-        }
 
         <div class="cv-actions">
           <button class="btn-primary" type="button" [disabled]="uploadingCv()" (click)="cvInput.click()">
