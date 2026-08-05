@@ -56,51 +56,44 @@ export const PROJECTS: SeedDoc[] = [
   },
 ];
 
+// slug doubles as the deterministic doc id — reruns upsert instead of duplicating.
+const tech = (
+  id: string,
+  name: string,
+  category: string,
+  yearsOfExperience: number,
+  color: string,
+  order: number,
+): SeedDoc => ({ id, data: { name, icon: id, category, color, yearsOfExperience, order } });
+
 export const TECHNOLOGIES: SeedDoc[] = [
-  {
-    id: 'angular',
-    data: {
-      name: 'Angular',
-      icon: 'angular',
-      category: 'frontend',
-      color: '#DD0031',
-      level: 90,
-      order: 1,
-    },
-  },
-  {
-    id: 'typescript',
-    data: {
-      name: 'TypeScript',
-      icon: 'typescript',
-      category: 'language',
-      color: '#3178C6',
-      level: 88,
-      order: 2,
-    },
-  },
-  {
-    id: 'firebase',
-    data: {
-      name: 'Firebase',
-      icon: 'firebase',
-      category: 'backend',
-      color: '#FFCA28',
-      level: 85,
-      order: 3,
-    },
-  },
-  {
-    id: 'tailwind',
-    data: {
-      name: 'Tailwind CSS',
-      icon: 'tailwind',
-      category: 'frontend',
-      color: '#38BDF8',
-      level: 82,
-      order: 4,
-    },
-  },
+  tech('csharp', 'C#', 'language', 3, '#239120', 1),
+  tech('dotnet', '.NET', 'backend', 3, '#512BD4', 2),
+  tech('aspnet-core', 'ASP.NET Core', 'backend', 3, '#512BD4', 3),
+  tech('ef-core', 'Entity Framework Core', 'backend', 3, '#68217A', 4),
+  tech('sql-server', 'SQL Server', 'database', 3, '#CC2927', 5),
+  tech('postgresql', 'PostgreSQL', 'database', 2, '#336791', 6),
+  tech('redis', 'Redis', 'backend', 2, '#DC382D', 7),
+  tech('kafka', 'Kafka', 'backend', 2, '#231F20', 8),
+  tech('docker', 'Docker', 'devops', 2, '#2496ED', 9),
+  tech('git', 'Git', 'devops', 3, '#F05032', 10),
+  tech('microservices', 'Microservices', 'architecture', 2, '#14B8A6', 11),
+  tech('clean-architecture', 'Clean Architecture', 'architecture', 2, '#06B6D4', 12),
+  tech('ddd', 'DDD', 'architecture', 1, '#7C3AED', 13),
+  tech('cqrs', 'CQRS', 'architecture', 2, '#8B5CF6', 14),
+  tech('mediatr', 'MediatR', 'library', 2, '#9333EA', 15),
+  tech('signalr', 'SignalR', 'backend', 2, '#0094FF', 16),
+  tech('jwt', 'JWT', 'security', 3, '#000000', 17),
+  tech('firebase', 'Firebase', 'cloud', 1, '#FFCA28', 18),
+  tech('firestore', 'Firestore', 'database', 1, '#FFCA28', 19),
+  tech('firebase-auth', 'Firebase Authentication', 'security', 1, '#FFA000', 20),
+  tech('firebase-storage', 'Firebase Storage', 'cloud', 1, '#FFB300', 21),
+  tech('angular', 'Angular', 'frontend', 2, '#DD0031', 22),
+  tech('typescript', 'TypeScript', 'language', 2, '#3178C6', 23),
+  tech('tailwindcss', 'Tailwind CSS', 'frontend', 2, '#38BDF8', 24),
+  tech('scss', 'SCSS', 'frontend', 3, '#CF649A', 25),
+  tech('html5', 'HTML5', 'frontend', 4, '#E34F26', 26),
+  tech('css3', 'CSS3', 'frontend', 4, '#1572B6', 27),
 ];
 
 export const SKILLS: SeedDoc[] = [
