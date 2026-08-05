@@ -3,6 +3,7 @@ import { afterNextRender, Component, DestroyRef, ElementRef, inject, signal } fr
 import { Project } from '@core/models/project.model';
 import { AnimationService } from '@core/services/animation.service';
 import { ProjectService } from '@core/services/project.service';
+import { TechnologyService } from '@core/services/technology.service';
 
 const MAX_CARDS = 3;
 
@@ -16,14 +17,18 @@ const MAX_CARDS = 3;
 export class FeaturedProjects {
   readonly projects = signal<Project[]>([]);
   readonly loaded = signal<boolean>(false);
+  private readonly techNames = signal<Record<string, string>>({});
 
   private animation = inject(AnimationService);
   private el = inject(ElementRef);
   private destroyRef = inject(DestroyRef);
   private projectService = inject(ProjectService);
+  private technologyService = inject(TechnologyService);
   private cleanup?: () => void;
 
   constructor() {
+    this.technologyService.getNameMap().then((map) => this.techNames.set(map));
+
     afterNextRender(async () => {
       try {
         let items = await this.projectService.getFeaturedProjects();
@@ -48,5 +53,10 @@ export class FeaturedProjects {
     });
 
     this.destroyRef.onDestroy(() => this.cleanup?.());
+  }
+
+  /** Resolves stored technology IDs/names to display names. */
+  techLabel(value: string): string {
+    return this.techNames()[value.toLowerCase()] ?? value;
   }
 }

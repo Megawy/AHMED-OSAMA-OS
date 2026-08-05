@@ -1,19 +1,19 @@
 import { Component, inject } from "@angular/core";
-import { AsyncPipe } from "@angular/common";
 
 import { ProjectCard } from "../project-card/project-card";
+import { SkeletonCard } from "@shared/components/skeleton-card/skeleton-card";
+import { EmptyState } from "@shared/components/empty-state/empty-state";
+import { ErrorState } from "@shared/components/error-state/error-state";
 
-import { ProjectService } from "@core/services/project.service";
+import { ProjectStateService } from "../../services/project-state.service";
 
 @Component({
   selector: "app-project-grid",
   standalone: true,
-  imports: [AsyncPipe, ProjectCard],
+  imports: [ProjectCard, SkeletonCard, EmptyState, ErrorState],
   templateUrl: "./project-grid.html",
   styleUrl: "./project-grid.scss",
 })
 export class ProjectGrid {
-  private readonly projectService = inject(ProjectService);
-
-  readonly projects$ = this.projectService.getProjects();
+  readonly state = inject(ProjectStateService);
 }

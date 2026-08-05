@@ -1,8 +1,20 @@
 <section class="project-grid">
 
-  @if(projects$ | async; as projects){
+  @if (state.isLoading()) {
 
-  @for(project of projects; track project.id){
+  <app-skeleton-card [count]="6" />
+
+  } @else if (state.hasError()) {
+
+  <app-error-state [message]="state.errorMessage()" (retry)="state.retry()" />
+
+  } @else if (state.isEmpty()) {
+
+  <app-empty-state title="No projects found" message="Try adjusting your search or category filter." icon="🔍" />
+
+  } @else {
+
+  @for (project of state.filteredProjects(); track project.id ?? project.slug) {
 
   <app-project-card [project]="project">
   </app-project-card>

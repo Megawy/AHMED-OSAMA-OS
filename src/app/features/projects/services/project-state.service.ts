@@ -8,6 +8,7 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 
 import { ProjectService } from '@core/services/project.service';
+import { TechnologyService } from '@core/services/technology.service';
 import { Project, ProjectCategory } from '@core/models/project.model';
 
 export type LoadingState = 'idle' | 'loading' | 'success' | 'error';
@@ -17,9 +18,11 @@ const ITEMS_PER_PAGE = 9;
 @Injectable({ providedIn: 'root' })
 export class ProjectStateService {
   private readonly projectService = inject(ProjectService);
+  private readonly technologyService = inject(TechnologyService);
   private readonly platformId = inject(PLATFORM_ID);
 
   readonly allProjects = signal<Project[]>([]);
+  readonly collectionTechCount = signal<number>(0);
   readonly searchQuery = signal<string>('');
   readonly selectedCategory = signal<ProjectCategory>('All');
   readonly currentPage = signal<number>(1);
@@ -68,6 +71,10 @@ export class ProjectStateService {
   );
 
   readonly technologyCount = computed<number>(() => {
+    // Prefer the live count from the technologies collection; fall back to the
+    // distinct technologies referenced by projects.
+    const collectionCount = this.collectionTechCount();
+    if (collectionCount > 0) return collectionCount;
     const techs = new Set<string>();
     for (const project of this.allProjects()) {
       for (const tech of project.technologies) {
@@ -103,8 +110,12 @@ export class ProjectStateService {
     this.errorMessage.set('');
 
     try {
-      const projects = await this.projectService.getProjects();
+      const [projects, technologies] = await Promise.all([
+        this.projectService.getProjects(),
+        this.technologyService.getTechnologies(),
+      ]);
       this.allProjects.set(projects);
+      this.collectionTechCount.set(technologies.length);
       this.loadingState.set('success');
     } catch (err: unknown) {
       this.loadingState.set('error');
