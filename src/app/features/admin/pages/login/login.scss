@@ -25,7 +25,6 @@
 .login-header {
   text-align: center;
   margin-bottom: 2rem;
-
   .login-illustration {
     display: block;
     width: 140px;
@@ -242,4 +241,55 @@
     padding: 1.5rem;
     border-radius: 16px;
   }
+}
+
+// ── Login method toggle & OTP ────────────────────────────────────────
+.mode-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  margin-bottom: 1.75rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  button {
+    padding: 0.6rem;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      color 0.2s;
+
+    &:hover {
+      color: #f8fafc;
+    }
+
+    &.active {
+      background: #00e5ff;
+      color: #030712;
+    }
+  }
+}
+
+.otp-input {
+  text-align: center;
+  letter-spacing: 0.5em;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.otp-countdown {
+  display: block;
+  margin-top: 0.5rem;
+  color: #64748b;
+  font-size: 0.78rem;
+  text-align: center;
 }

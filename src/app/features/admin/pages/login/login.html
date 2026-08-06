@@ -1,6 +1,85 @@
 <div class="login-page">
     <div class="login-card">
-        @if (!showForgotForm()) {
+        <div class="mode-toggle" role="tablist" aria-label="Login method">
+            <button type="button" role="tab" [class.active]="loginMode() === 'email'"
+                (click)="setLoginMode('email')">Email</button>
+            <button type="button" role="tab" [class.active]="loginMode() === 'phone'"
+                (click)="setLoginMode('phone')">Phone (OTP)</button>
+        </div>
+
+        @if (loginMode() === 'phone') {
+        <div class="login-header">
+            <div class="logo-mark">&lt;/&gt;</div>
+            <h1>Admin Login</h1>
+            <p>Sign in with your linked phone number</p>
+        </div>
+
+        @if (error()) {
+        <div class="alert error" role="alert">
+            <span>⚠</span>
+            <span>{{ error() }}</span>
+        </div>
+        }
+
+        @if (otpStep() === 'phone') {
+        <form (ngSubmit)="sendOtp()" class="login-form">
+            <div class="field">
+                <label for="phone">Phone Number</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="01xxxxxxxxx or +201xxxxxxxxx"
+                    [ngModel]="phone()" (ngModelChange)="phone.set($event)" [disabled]="loading()" />
+            </div>
+
+            <button type="submit" class="submit-btn" [disabled]="!canSendOtp()">
+                @if (loading()) {
+                <span class="spinner"></span>
+                <span>Sending...</span>
+                } @else {
+                <span>Send Code</span>
+                }
+            </button>
+        </form>
+        } @else {
+        <form (ngSubmit)="confirmOtp()" class="login-form">
+            @if (otpNotice()) {
+            <div class="alert success" role="status">
+                <span>🔁</span>
+                <span>{{ otpNotice() }}</span>
+            </div>
+            }
+
+            <div class="field">
+                <label for="otp">Verification Code</label>
+                <input id="otp" name="otp" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code"
+                    placeholder="______" class="otp-input" [ngModel]="otpCode()"
+                    (ngModelChange)="onOtpInput($event)" [disabled]="loading()" />
+                <span class="otp-countdown">
+                    @if (countdown() > 0) {
+                    Auto-{{ otpAttempt() === 1 ? 'resend' : 'cancel' }} in {{ countdown() }}s…
+                    } @else {
+                    Processing…
+                    }
+                </span>
+            </div>
+
+            <button type="submit" class="submit-btn" [disabled]="!canConfirmOtp()">
+                @if (loading()) {
+                <span class="spinner"></span>
+                <span>Verifying...</span>
+                } @else {
+                <span>Verify & Sign In</span>
+                }
+            </button>
+
+            <button type="button" class="back-link" (click)="cancelOtp()">
+                ← Use a different number
+            </button>
+        </form>
+        }
+
+        <button type="button" class="back-link" (click)="setLoginMode('email')">
+            ← Back to email login
+        </button>
+        } @else if (!showForgotForm()) {
         <div class="login-header">
             <div class="logo-mark">&lt;/&gt;</div>
             <h1>Admin Login</h1>

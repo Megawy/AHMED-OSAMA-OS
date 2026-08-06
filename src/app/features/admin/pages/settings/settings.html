@@ -83,6 +83,83 @@
       </div>
     </app-admin-card>
 
+    <app-admin-card title="Security"
+      description="Link your phone for OTP login and manage your password.">
+      <div class="security-grid">
+        <div class="security-block">
+          <h4>📱 Phone Number (OTP Login)</h4>
+          @if (authUser()?.phoneNumber) {
+          <div class="alert success">
+            <span>✅</span>
+            <span>Linked: {{ authUser()!.phoneNumber }}</span>
+          </div>
+          } @else if (linkStep() === 'code') {
+          <div class="field">
+            <label for="link-code">Enter the 6-digit code</label>
+            <input id="link-code" type="text" inputmode="numeric" maxlength="6" class="otp-field"
+              placeholder="______" [ngModel]="linkCode()" (ngModelChange)="onLinkCodeInput($event)" name="linkCode"
+              [disabled]="linkBusy()" />
+          </div>
+          <div class="security-actions">
+            <button class="btn-primary" type="button" [disabled]="linkBusy() || linkCode().length !== 6"
+              (click)="confirmLink()">
+              {{ linkBusy() ? 'Verifying...' : 'Confirm' }}
+            </button>
+            <button class="btn-secondary" type="button" (click)="cancelLink()">Cancel</button>
+          </div>
+          } @else {
+          <div class="field">
+            <label for="link-phone">Phone Number</label>
+            <input id="link-phone" type="tel" placeholder="01xxxxxxxxx or +201xxxxxxxxx" [ngModel]="linkPhone()"
+              (ngModelChange)="linkPhone.set($event)" name="linkPhone" [disabled]="linkBusy()" />
+          </div>
+          <div class="security-actions">
+            <button class="btn-primary" type="button" [disabled]="linkBusy() || linkPhone().trim().length < 10"
+              (click)="sendLinkCode()">
+              {{ linkBusy() ? 'Sending...' : 'Send Code & Link' }}
+            </button>
+          </div>
+          }
+          @if (linkError()) {
+          <div class="alert error"><span>⚠️</span><span>{{ linkError() }}</span></div>
+          }
+          @if (linkMessage()) {
+          <div class="alert success"><span>✅</span><span>{{ linkMessage() }}</span></div>
+          }
+        </div>
+
+        <div class="security-block">
+          <h4>🔒 Change Password</h4>
+          <div class="field">
+            <label for="pw-current">Current Password</label>
+            <input id="pw-current" type="password" autocomplete="current-password" [ngModel]="pwCurrent()"
+              (ngModelChange)="pwCurrent.set($event)" name="pwCurrent" [disabled]="pwBusy()" />
+          </div>
+          <div class="field">
+            <label for="pw-new">New Password (min 8 characters)</label>
+            <input id="pw-new" type="password" autocomplete="new-password" [ngModel]="pwNew()"
+              (ngModelChange)="pwNew.set($event)" name="pwNew" [disabled]="pwBusy()" />
+          </div>
+          <div class="field">
+            <label for="pw-confirm">Confirm New Password</label>
+            <input id="pw-confirm" type="password" autocomplete="new-password" [ngModel]="pwConfirm()"
+              (ngModelChange)="pwConfirm.set($event)" name="pwConfirm" [disabled]="pwBusy()" />
+          </div>
+          <div class="security-actions">
+            <button class="btn-primary" type="button" [disabled]="!canChangePw()" (click)="changePassword()">
+              {{ pwBusy() ? 'Changing...' : 'Change Password' }}
+            </button>
+          </div>
+          @if (pwError()) {
+          <div class="alert error"><span>⚠️</span><span>{{ pwError() }}</span></div>
+          }
+          @if (pwMessage()) {
+          <div class="alert success"><span>✅</span><span>{{ pwMessage() }}</span></div>
+          }
+        </div>
+      </div>
+    </app-admin-card>
+
     <app-admin-card title="Social Links" description="Profiles displayed across the site.">
       <div class="form-grid">
         <div class="field">

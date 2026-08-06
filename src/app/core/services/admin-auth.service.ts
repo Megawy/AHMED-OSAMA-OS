@@ -99,6 +99,41 @@ export class AdminAuthService {
     this.error.set('');
   }
 
+  /**
+   * Verifies the admin after a phone-OTP sign-in. The phone must be linked
+   * to the admin's email account (Settings → Security), otherwise the user
+   * is signed out again.
+   */
+  async completePhoneLogin(): Promise<boolean> {
+    this.checking.set(true);
+    this.error.set('');
+
+    try {
+      const user = this.authService.user();
+      if (!user?.email) {
+        await this.authService.logout();
+        this.error.set(
+          'This number is not linked to an admin account. Sign in with email, then link your phone from Settings → Security.',
+        );
+        this.checking.set(false);
+        return false;
+      }
+
+      const isAdmin = await this.checkAdminStatus(user.email);
+      if (!isAdmin) {
+        await this.authService.logout();
+        this.error.set(this.error() || 'Access denied. You are not an authorized admin.');
+        return false;
+      }
+
+      return true;
+    } catch (err) {
+      this.error.set(err instanceof Error ? err.message : 'Phone login failed.');
+      this.checking.set(false);
+      return false;
+    }
+  }
+
   async sendPasswordReset(email: string): Promise<void> {
     await this.authService.sendPasswordReset(email);
   }
