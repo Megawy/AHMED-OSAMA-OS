@@ -45,3 +45,23 @@ button:hover {
 
   box-shadow: 0 0 20px rgba(37, 99, 235, 0.35);
 }
+
+@media (max-width: 768px) {
+  .project-filter {
+    gap: 10px;
+
+    margin-bottom: 2.5rem;
+
+    padding: 0 16px;
+  }
+
+  button {
+    padding: 0.6rem 1.1rem;
+
+    font-size: 0.85rem;
+  }
+
+  button:hover {
+    transform: none;
+  }
+}

@@ -5,9 +5,20 @@
 
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  /* min(100%, 360px): never forces a column wider than the viewport. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
 
   gap: 2rem;
 
   padding-bottom: 6rem;
+}
+
+@media (max-width: 768px) {
+  .project-grid {
+    width: min(1400px, 92%);
+
+    gap: 1.25rem;
+
+    padding-bottom: 4rem;
+  }
 }

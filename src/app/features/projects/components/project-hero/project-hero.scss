@@ -46,11 +46,12 @@
 }
 
 h1 {
-  font-size: clamp(3rem, 8vw, 5rem);
-  line-height: 1;
+  font-size: clamp(2.25rem, 6vw + 1rem, 5rem);
+  line-height: 1.05;
   margin-bottom: 1.5rem;
   font-weight: 800;
   color: #f8fafc;
+  overflow-wrap: anywhere;
 }
 
 .subtitle {
@@ -88,12 +89,20 @@ h1 {
 
 @media (max-width: 768px) {
   .project-hero {
-    padding: 5rem 1.25rem;
+    padding: 4rem 1.25rem;
     min-height: auto;
   }
 
+  .badge {
+    margin-bottom: 1.25rem;
+
+    font-size: 0.8rem;
+  }
+
   .stats {
-    gap: 2rem;
+    margin-top: 2.5rem;
+
+    gap: 1.25rem 2rem;
   }
 
   .subtitle {
@@ -101,6 +110,10 @@ h1 {
   }
 
   .stat h2 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .stat span {
+    font-size: 0.85rem;
   }
 }

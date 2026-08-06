@@ -169,3 +169,47 @@
 .actions button:hover {
   transform: translateY(-2px);
 }
+
+@media (max-width: 768px) {
+  .cover {
+    height: 180px;
+  }
+
+  .cover-fallback {
+    font-size: 3rem;
+  }
+
+  .featured {
+    top: 14px;
+
+    left: 14px;
+
+    padding: 0.4rem 0.85rem;
+
+    font-size: 0.72rem;
+  }
+
+  .body {
+    padding: 1.4rem;
+  }
+
+  .body h2 {
+    font-size: 1.2rem;
+  }
+
+  .body p {
+    font-size: 0.9rem;
+  }
+
+  .stack {
+    gap: 8px;
+
+    padding-top: 1.5rem;
+  }
+
+  .stack span {
+    padding: 0.35rem 0.75rem;
+
+    font-size: 0.78rem;
+  }
+}
