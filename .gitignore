@@ -43,27 +43,5 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
-# Environment secrets — generated from .env by `npm run env:generate`
-.env
-.env.*
-!.env.example
-src/environments/environment.development.ts
-src/environments/environment.production.ts
-src/environments/environment.local.ts
-src/environments/*.local.ts
-!src/environments/*.example
-
-# Credentials
-serviceAccountKey.json
-*serviceAccount*.json
-*.pem
-*.key
-
-# Firebase
-/.firebase
-firebase-debug.log
-firestore-debug.log
-ui-debug.log
-pubsub-debug.log
-
+# Obsolete remnant
 mega-portfolio/

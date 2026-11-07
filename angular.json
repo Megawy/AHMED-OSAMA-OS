@@ -28,11 +28,6 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
               }
             ],
             "styles": [
@@ -63,29 +58,12 @@
                   "maximumError": "16kB"
                 }
               ],
-              "outputHashing": "all",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.development.ts",
-                  "with": "src/environments/environment.production.ts"
-                }
-              ]
+              "outputHashing": "all"
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
-            },
-            "local": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.development.ts",
-                  "with": "src/environments/environment.local.ts"
-                }
-              ]
             }
           },
           "defaultConfiguration": "production"
@@ -98,9 +76,6 @@
             },
             "development": {
               "buildTarget": "mega-portfolio:build:development"
-            },
-            "local": {
-              "buildTarget": "mega-portfolio:build:local"
             }
           },
           "defaultConfiguration": "development"
